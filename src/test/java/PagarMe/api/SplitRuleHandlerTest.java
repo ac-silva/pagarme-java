@@ -1,4 +1,4 @@
-package PagarMe.api;
+package pagarme.api;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -11,9 +11,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import PagarMe.api.handler.SplitRuleHandler;
-import PagarMe.api.model.Recipient;
-import PagarMe.api.model.SplitRule;
+import pagarme.api.handler.SplitRuleHandler;
+import pagarme.api.model.Recipient;
+import pagarme.api.model.SplitRule;
 
 public class SplitRuleHandlerTest {
 	@Mock

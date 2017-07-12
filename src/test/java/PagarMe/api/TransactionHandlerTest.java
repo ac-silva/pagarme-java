@@ -1,4 +1,4 @@
-package PagarMe.api;
+package pagarme.api;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -14,10 +14,10 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import PagarMe.api.handler.TransactionHandler;
-import PagarMe.api.model.Boleto;
-import PagarMe.api.model.Card;
-import PagarMe.api.model.Transaction;
+import pagarme.api.handler.TransactionHandler;
+import pagarme.api.model.Boleto;
+import pagarme.api.model.Card;
+import pagarme.api.model.Transaction;
 import junit.framework.TestCase;
 
 public class TransactionHandlerTest extends TestCase {

@@ -1,4 +1,4 @@
-package PagarMe.api;
+package pagarme.api;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.client.RestTemplate;
 
-import PagarMe.api.model.Transaction;
+import pagarme.api.model.Transaction;
 
 public class ClientTest{
 	@Mock
