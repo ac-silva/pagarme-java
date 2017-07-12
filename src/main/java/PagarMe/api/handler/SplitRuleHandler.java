@@ -1,16 +1,16 @@
-package PagarMe.api.handler;
+package pagarme.api.handler;
 
-import PagarMe.api.RestClient;
-import PagarMe.api.model.SplitRule;
+import pagarme.api.RestClient;
+import pagarme.api.model.SplitRule;
 
 public class SplitRuleHandler {
-	private RestClient client;
+    private RestClient client;
 
-	public SplitRuleHandler(RestClient client){
-		this.client = client;
-	}
+    public SplitRuleHandler(RestClient client) {
+        this.client = client;
+    }
 
-	public SplitRule getSplitRuleOfTransaction(Long id) {
-		return client.get(id, "transactions", SplitRule.class);
-	}
+    public SplitRule getSplitRuleOfTransaction(Long id) {
+        return client.get(id, "transactions", SplitRule.class);
+    }
 }

@@ -1,12 +1,12 @@
-package PagarMe.api.handler;
+package pagarme.api.handler;
 
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import PagarMe.api.RestClient;
-import PagarMe.api.model.BankAccount;
+import pagarme.api.RestClient;
+import pagarme.api.model.BankAccount;
 
 public class BankAccountHandler {
 	private RestClient client;

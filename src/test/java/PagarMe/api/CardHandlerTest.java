@@ -1,4 +1,4 @@
-package PagarMe.api;
+package pagarme.api;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -14,8 +14,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.client.HttpServerErrorException;
 
-import PagarMe.api.handler.CardHandler;
-import PagarMe.api.model.Card;
+import pagarme.api.handler.CardHandler;
+import pagarme.api.model.Card;
 
 public class CardHandlerTest {
 	@Mock

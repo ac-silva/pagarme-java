@@ -1,4 +1,4 @@
-package PagarMe.api;
+package pagarme.api;
 
 import static org.mockito.Mockito.when;
 
@@ -11,9 +11,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import PagarMe.api.handler.RecipientHandler;
-import PagarMe.api.model.BankAccount;
-import PagarMe.api.model.Recipient;
+import pagarme.api.handler.RecipientHandler;
+import pagarme.api.model.BankAccount;
+import pagarme.api.model.Recipient;
 import junit.framework.TestCase;
 
 public class RecipientHandlerTest extends TestCase{

@@ -1,4 +1,4 @@
-package PagarMe.api;
+package pagarme.api;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -13,8 +13,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import PagarMe.api.handler.PayableHandler;
-import PagarMe.api.model.Payable;
+import pagarme.api.handler.PayableHandler;
+import pagarme.api.model.Payable;
 
 public class PayableHandlerTest {
 	@Mock
