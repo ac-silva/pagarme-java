@@ -12,12 +12,10 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
@@ -48,59 +46,58 @@ public class CardHashKey {
     public String generate(Client client, Card card, String encryptionKey) throws JsonParseException,
             JsonMappingException, IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException,
             InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException, CertificateException {
-        String encrypted;
-
-        // pegando publickey
+        //Obtendo publickey
         List<NameValuePair> encReq = new ArrayList<>();
         encReq.add(new BasicNameValuePair("encryption_key", encryptionKey));
         CardHashKey gen = client.get(encReq, CardHashKey.class);
-
-        // criando queryString
+        //Criando queryString
+        String queryString = getQueryString(card);
+        //Obtendo a chave pública
+        String publickey = removeConfigKeysInPublicKey(gen.getPublicKey());
+        //Criptografando
+        Cipher cipher = encrypt(publickey);
+        return toBase64(gen, cipher, queryString);
+    }
+    private Cipher encrypt(String publickey) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeySpecException, InvalidKeyException{
+        BASE64Decoder b64       = new BASE64Decoder();
+        byte[] decoded          = b64.decodeBuffer(publickey);
+        X509EncodedKeySpec spec = new X509EncodedKeySpec(decoded);
+        Cipher cipher           = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        KeyFactory kf           = KeyFactory.getInstance("RSA");
+        PublicKey key           = kf.generatePublic(spec);
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        return cipher;
+    }
+    private String toBase64(CardHashKey gen, Cipher cipher, String queryString) throws IllegalBlockSizeException, BadPaddingException{
+        String encrypted = Base64.getEncoder().encodeToString(cipher.doFinal(queryString.getBytes()));
+        return String.valueOf(gen.getId()).concat("_").concat(encrypted);
+    }
+    private String getQueryString(Card card){
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("card_number", card.getCardNumber()));
         params.add(new BasicNameValuePair("card_holder_name", card.getHolderName()));
         params.add(new BasicNameValuePair("card_expiration_date", card.getExpirationDate()));
         params.add(new BasicNameValuePair("card_cvv", card.getCvv()));
-        String queryString = URLEncodedUtils.format(params, "UTF-8");
-
-        String publickey = gen.getPublicKey();
-        publickey = publickey.replaceAll("-----BEGIN PUBLIC KEY-----", "");
-        publickey = publickey.replaceAll("-----END PUBLIC KEY-----", "");
-        // criptografando;;
-
-        BASE64Decoder b64 = new BASE64Decoder();
-        byte[] decoded = b64.decodeBuffer(publickey);
-        X509EncodedKeySpec spec = new X509EncodedKeySpec(decoded);
-        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-        KeyFactory kf = KeyFactory.getInstance("RSA");
-        PublicKey key = kf.generatePublic(spec);
-        cipher.init(Cipher.ENCRYPT_MODE, key);
-
-        // toBase64
-        encrypted = Base64.getEncoder().encodeToString(cipher.doFinal(queryString.getBytes()));
-        return String.valueOf(gen.getId()).concat("_").concat(encrypted);
+        return URLEncodedUtils.format(params, "UTF-8");
     }
-
+    private String removeConfigKeysInPublicKey(String publickey){
+        return publickey.replaceAll("-----BEGIN PUBLIC KEY-----", "").replaceAll("-----END PUBLIC KEY-----", "");
+    }
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
     public Date getDateCreated() {
         return dateCreated;
     }
-
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
-
     public String getPublicKey() {
         return publicKey;
     }
-
     public void setPublicKey(String publicKey) {
         this.publicKey = publicKey;
     }
